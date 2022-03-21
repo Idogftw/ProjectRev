@@ -53,10 +53,9 @@ Layout of each: (Names are exactly how they should be so premake knows how to bu
 After that everything should build correctly, if any issues occur let me know.
 
 ## Notes
-This entire project will have changes throughout its life span, libraries, files, etc, so there might be versions of the source that you see on here that're no longer useable due to major changes.
-Also as libraries are updated for the project their respective links will be too. If issues occur with certain links please feel free to make an issue or let me know on my [Twitter](https://twitter.com/idogftw).
+**Everything in this README and project itself is NOT set in stone so if you see something you don't like as far as a formatting, C++ standards and conventions go, not all will stay and will be subject to change based on input from others. I am simply one person and am just trying to do a fun project to share with others and am by no means a professional programmer or mathematician, there will be mistakes and possibly bad code/math but help and guidance is always welcome, thanks!**
 
-**_Lastly, this project will not become similar to that of Unity, Unreal, Godot, or any of those editors being all in one and it will not have an ECS or some of what modern engines have. This will be an old school type of engine similar to that of Doom 3 and COD in the sense of using a def file for entity types and in other ways, modders of those games will have an idea of what I mean by how similar I would like it to be. It will have modern techniques for some stuff but not everything, the determining factor of what will, will be a see it as it goes._**
+**Also, this project will not become similar to that of Unity, Unreal, Godot, or any of those editors being all in one and it will not have an ECS or some of what modern engines have. This will be an old school type of engine similar to that of Doom 3 and COD in the sense of using a def file for entity types and in other ways, modders of those games will have an idea of what I mean by how similar I would like it to be. It will have modern techniques for some stuff but not everything, the determining factor of what will, will be a see it as it goes.**
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
