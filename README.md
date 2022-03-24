@@ -2,9 +2,7 @@
 
 ## Description
 The game portion of this projects theme will be some sort of horror type, none specific but that's the basis.
-As for the engine there is no exact direction for it, I am just simply going to try and do some of the planned features shown in the Trello and then go from there. I would like to implement the basics of a window, events, input and rendering to start off and then go on the specific features below or on the Trello linked below.
-
-##  [Trello](https://trello.com/b/IBEsloS2/project-rev)
+As for the engine there is no exact direction for it, I am just simply going to try and do some of the planned features shown in the Trello and then go from there. I would like to implement the basics of a window, events, input and rendering to start off and then go on the specific features below and on the Trello linked below.
 
 ## Planned Features (Engine)
 - Skeletal Animation
@@ -16,10 +14,11 @@ As for the engine there is no exact direction for it, I am just simply going to 
 - SSAO
 - Bloom/HDR
 - BSP Mapping support
-- PBR
-- More to Come!!!
+- **More on Trello below!!**
 
 **_Suggestions welcome!_**
+
+### [Trello](https://trello.com/b/IBEsloS2/project-rev)
 
 ## Instructions to Run
 First you're going to need a couple libraries:
