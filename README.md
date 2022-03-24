@@ -29,8 +29,6 @@ First you're going to need a couple libraries:
         - GL: Version 4.5
         - Profile: Compatibility
 - [nlohmann](https://github.com/nlohmann/json)
-- [SDL](https://www.libsdl.org/download-2.0.php)
-     - Note: SDL might not be used in favor of using OS specific API's.
 
 Once they're downloaded and installed you're going to want to place them in the /Gateway/binary directory which will need to be created.
 Layout of each: (Names are exactly how they should be so premake knows how to build the directories)
@@ -45,9 +43,6 @@ Layout of each: (Names are exactly how they should be so premake knows how to bu
     - src
 - nlohmann
     - include
-- sdl
-    - include/sdl
-    - lib/x64
 
 After that everything should build correctly, if any issues occur let me know.
 
