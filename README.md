@@ -44,7 +44,9 @@ Layout of each: (Names are exactly how they should be so premake knows how to bu
 - nlohmann
     - include
 
-After that everything should build correctly, if any issues occur let me know.
+Lastly, you will need to download the [Premake5](https://premake.github.io/download) executable and place in the directory of the premake lua file.
+
+After everything is downloaded and put in their correct directiories you can then open a cmd prompt in the directory of the premake lua file and run 'premake.exe vs2017'
 
 ## Notes
 **Everything in this README and project itself is NOT set in stone so if you see something you don't like as far as a formatting, C++ standards and conventions go, not all will stay and will be subject to change based on input from others. I am simply one person and am just trying to do a fun project to share with others and am by no means a professional programmer or mathematician, there will be mistakes and possibly bad code/math but help and guidance is always welcome, thanks!**

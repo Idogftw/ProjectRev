@@ -19,10 +19,24 @@ workspace "ProjectRev-SLN"
 
     cppdialect "C++17"
 
+    startproject "Rev"
+
     -- Implement other APIs and add if for defines --
     defines {
         "_CRT_SECURE_NO_WARNINGS"
     }
+    
+    if os.target() == "windows" then
+        defines "win32"
+    end
+
+    if os.target() == "linux" then
+        defines "linux"
+    end
+
+    if os.target() == "macosx" then
+        defines "macos"
+    end
 
     configuration "Debug"
         defines "GW_DEBUG"
@@ -33,8 +47,6 @@ workspace "ProjectRev-SLN"
         defines "GW_RELEASE"
         optimize "On"
 
-    startproject "Rev"
-
     project "Gateway"
         location (ENGINE_SRC)
         kind "StaticLib"
@@ -43,17 +55,15 @@ workspace "ProjectRev-SLN"
         -- Multi Use libs --
         
         libdirs {
-            path.join(BINARY_DIR, "sdl/lib/x64"),
             path.join(BINARY_DIR, "DevIL/lib/x64/Release")
         }
 
         links {
-            "SDL2",
-            "SDL2main",
             "DevIL",
             "ILU",
             "ILUT",
-            "libfbxsdk"
+            "libfbxsdk",
+            "opengl32.lib"
         }
 
         -- Project Files --
@@ -63,7 +73,6 @@ workspace "ProjectRev-SLN"
             -- Dependencies --
             path.join(BINARY_DIR, "glad/include/"),
             path.join(BINARY_DIR, "nlohmann/"),
-            path.join(BINARY_DIR, "sdl/include/"),
             path.join(BINARY_DIR, "DevIL/include/"),
             path.join(BINARY_DIR, "fbx/include/")
         }
@@ -94,7 +103,7 @@ workspace "ProjectRev-SLN"
 
     project "Rev"
         location (GAME_SRC)
-        kind "ConsoleApp"
+        kind "WindowedApp"
         language "C++"
 
         links("Gateway")
@@ -105,7 +114,6 @@ workspace "ProjectRev-SLN"
             -- Dependencies --
             path.join(BINARY_DIR, "glad/include/"),
             path.join(BINARY_DIR, "nlohmann/"),
-            path.join(BINARY_DIR, "sdl/include/"),
             path.join(BINARY_DIR, "DevIL/include/")
         }
         
