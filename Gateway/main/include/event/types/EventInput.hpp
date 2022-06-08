@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../EventBase.hpp"
+#include "common/system/LogSys.hpp"
 
 namespace Gateway
 {
@@ -10,6 +11,8 @@ namespace Gateway
 		EventInputType_KeyDown,
 		EventInputType_KeyUp,
 		EventInputType_Mouse,
+		EventInputType_MouseMove,
+		EventInputType_MouseWheel,
 		EventInputType_MouseDown,
 		EventInputType_MouseUp,
 		EventInputType_Button,

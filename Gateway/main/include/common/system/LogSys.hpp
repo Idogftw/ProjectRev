@@ -8,13 +8,13 @@
 
 #define GATEWAY_LOG "Gateway.log"
 
-#define INFO(msg, ...)  LogSys::Get()->Log(msg, __VA_ARGS__) 
-#define WARN(msg, ...)  LogSys::Get()->Warn(msg, __VA_ARGS__)
-#define ERR(msg, ...) LogSys::Get()->Error(msg,  __VA_ARGS__)
-#define FATAL(msg, ...) LogSys::Get()->Fatal(msg,  __VA_ARGS__)
+#define GINFO(msg, ...)  Gateway::LogSys::Get()->Log(msg, __VA_ARGS__) 
+#define GWARN(msg, ...)  Gateway::LogSys::Get()->Warn(msg, __VA_ARGS__)
+#define GERR(msg, ...) Gateway::LogSys::Get()->Error(msg,  __VA_ARGS__)
+#define GFATAL(msg, ...) Gateway::LogSys::Get()->Fatal(msg,  __VA_ARGS__)
 
-#define DINFO(msg, ...)  LogSys::Get()->DLog(msg, __VA_ARGS__)
-#define DWARN(msg, ...)  LogSys::Get()->DWarn(msg, __VA_ARGS__)
+#define GDINFO(msg, ...)  Gateway::LogSys::Get()->DLog(msg, __VA_ARGS__)
+#define GDWARN(msg, ...)  Gateway::LogSys::Get()->DWarn(msg, __VA_ARGS__)
 
 #define COLOR_DEFAULT				"^0"
 #define COLOR_RED					"^1"

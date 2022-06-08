@@ -54,7 +54,7 @@ namespace Gateway
 		std::string var_msg(buf.data(), buf.size());
 
 		//@TODO: Impl timestamps with messages!
-		CVar* var = m_cvar_sys->Find("s_developer");
+		//CVar* var = m_cvar_sys->Find("s_developer");
 		/*if (var != nullptr && var.GetValue<int>())
 		{
 			int mil = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
@@ -69,7 +69,7 @@ namespace Gateway
 		}*/
 
 		//Impl filesystem
-		var = m_cvar_sys->Find("s_save_log");
+		CVar* var = m_cvar_sys->Find("s_save_log");
 		if (var != nullptr && var->GetValue<bool>())
 		{
 			//Temporary file saving

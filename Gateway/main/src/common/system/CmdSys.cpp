@@ -1,8 +1,8 @@
 #include "common/system/CmdSys.hpp"
+#include "common/system/LogSys.hpp"
 
 namespace Gateway
 {
-
 	CommandSystem::CommandSystem()
 	{
 	}
@@ -23,7 +23,7 @@ namespace Gateway
 		uint32_t idx = GetCommandByIdx(t_name);
 		if (idx != -1)
 		{
-			//LOG_WARN("Command %s already exists", t_name.c_str());
+			GWARN("CmdSys: Command %s already exists!", t_name.c_str());
 			return;
 		}
 
@@ -80,7 +80,7 @@ namespace Gateway
 	{
 		if (t_args == nlohmann::json::object())
 		{
-			//LOG_WARN("No arguments present for Execute!");
+			GWARN("CmdSys: No arguments present for Execute!");
 			return;
 		}
 
@@ -129,7 +129,7 @@ namespace Gateway
 		return j;
 	}
 
-	int CommandSystem::GetCommandByIdx(const std::string & t_name)
+	int CommandSystem::GetCommandByIdx(const std::string& t_name)
 	{
 		auto it = std::find_if(m_commands.begin(), m_commands.end(), [t_name](const Command& d)
 			{
@@ -154,7 +154,7 @@ namespace Gateway
 	{
 		if (t_args.size() != 2)
 		{
-			//LOG_INFO("exec <filename> : execute a file");
+			GINFO("CmdSys: exec <filename> : execute a file");
 			return;
 		}
 
@@ -163,7 +163,7 @@ namespace Gateway
 		std::ifstream file(name);
 		if (!file)
 		{
-			//LOG_WARN("Couldn't read file %s, doesn't exist", name.c_str());
+			GWARN("Couldn't read file %s, doesn't exist", name.c_str());
 			return;
 		}
 

@@ -26,7 +26,7 @@ namespace Gateway
 		auto ev = m_events.find(static_cast<EventInputTypes>(t_type));
 		if (ev == m_events.end())
 		{
-			//INFO("EventInput: EventType %s not registered!", TypeToString(t_type).c_str());
+			GINFO("EventInput: EventType %s not registered!", TypeToString(t_type).c_str());
 			return;
 		}
 
@@ -38,7 +38,7 @@ namespace Gateway
 		auto ev = m_events.find(static_cast<EventInputTypes>(t_type));
 		if (ev == m_events.end())
 		{
-			//INFO("EventInput: EventType %s not registered!", TypeToString(t_type).c_str());
+			GINFO("EventInput: EventType %s not registered!", TypeToString(t_type).c_str());
 			return;
 		}
 
@@ -66,7 +66,7 @@ namespace Gateway
 			return std::string("MouseDown");
 		case EventInputType_Last:
 		default:
-			//WARN("EventInput: EventInputType_Last or no EventInputType given");
+			GWARN("EventInput: EventInputType_Last or no EventInputType given");
 			return std::string("NULL");
 		}
 	}

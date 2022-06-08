@@ -21,7 +21,7 @@ namespace Gateway
 	{
 		if (m_events.find(t_type) != m_events.end())	
 		{
-			//WARN("EventSystem: System %s already exists!", TypeToString(t_type).c_str());
+			GWARN("EventSystem: System %s already exists!", TypeToString(t_type).c_str());
 			return;
 		}
 
@@ -46,11 +46,11 @@ namespace Gateway
 			return std::string("Renderer");
 		case EventType_Game:
 			return std::string("Game");
-		case EventType_Command:
-			return std::string("Command");
+		case EventType_Misc:
+			return std::string("Misc");
 		case EventType_Last:
 		default:
-			//WARN("EventSystem: EventType_Last or no EventType given");
+			GWARN("EventSystem: EventType_Last or no EventType given");
 			return std::string();
 		}
 	}

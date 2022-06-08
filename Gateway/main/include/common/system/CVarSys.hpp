@@ -34,6 +34,7 @@ namespace Gateway
 
 	class Engine;
 	class CVar;
+	class LogSys;
 
 	class CVarSystem
 	{
@@ -67,7 +68,6 @@ namespace Gateway
 		//Exists already
 		if(var != nullptr)
 		{
-			delete var;
 			return;
 		}
 
@@ -75,9 +75,7 @@ namespace Gateway
 
 		m_cvars.push_back(*var);
 		
-		delete var;
-
-		//EventDispatcher::Get()->MakeEvent(t_name);
+		//m_engine->RegisterEvent(EventType_Misc, EventMiscType_CVar, );
 	}
 
 	template <typename T>
@@ -91,11 +89,12 @@ namespace Gateway
 		}
 
 		var->SetValue(t_val);
+		
+		nlohmann::json data;
+		data["name"] = t_val;
 
-		//OnEvent(m_cvars[t_idx]["name"], nlohmann::json({
-		//	{"name", m_cvars[t_idx]["name"]},
-		//	{"value", t_var["value"]}
-		//	}));
+		m_engine->OnEvent(EventType_Misc, EventMiscType_CVar, data);
+		
 	}
 
 	//@TODO: Temp

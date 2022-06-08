@@ -3,8 +3,6 @@
 
 #include <json.hpp>
 
-//#include "Common/System/LogSystem.hpp"
-
 namespace Gateway
 {
 	typedef std::function<void(nlohmann::json)> event_callback;
@@ -17,9 +15,12 @@ namespace Gateway
 
 		EventType_Game,			/* System for Game: Anything the Game sets up as events */
 
-		EventType_Command,		/* System for Command: (!!MAYBE!!) Commands that come from CommandSystem */
+		EventType_Misc,			/* System for Miscellaneous events, like CVars updated, commands, etc */
 		EventType_Last
 	};
+
+	//@TODO: Implement a priority system so certain callbacks take priority over others, like engine would be
+	//lowest priority and say renderer highest when quitting
 
 	class IEventBase
 	{

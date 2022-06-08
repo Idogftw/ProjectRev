@@ -65,15 +65,6 @@ namespace Gateway
 		ShowWindow(m_handle, SW_SHOW);
 		UpdateWindow(m_handle);
 
-		//@TEMP
-		if (!InitGL())
-		{
-			ShowWindow(m_handle, SW_HIDE);
-			DestroyWindow(m_handle);
-			m_handle = NULL;
-			return false;
-		}
-
 		SetForegroundWindow(m_handle);
 		SetFocus(m_handle);
 
@@ -88,64 +79,7 @@ namespace Gateway
 			TranslateMessage(&message);
 			DispatchMessage(&message);
 		}
-
-		//@TEMP
-		glClear(GL_COLOR_BUFFER_BIT);
-		SwapBuffers(m_hdc);
-	}
-
-	bool Platform_Win32::InitGL()
-	{
-		m_hdc = GetDC(m_handle);
-
-		PIXELFORMATDESCRIPTOR pfd = {
-			sizeof(PIXELFORMATDESCRIPTOR),
-			1,
-			PFD_DRAW_TO_WINDOW |
-			PFD_SUPPORT_OPENGL |
-			PFD_DOUBLEBUFFER,
-			PFD_TYPE_RGBA,
-			32,
-			0, 0, 0, 0, 0, 0,
-			8,
-			0,
-			0,
-			0, 0, 0, 0,
-			24,
-			8,
-			0,
-			PFD_MAIN_PLANE,
-			0,
-			0, 0, 0
-		};
 		
-		int pixel_format = ChoosePixelFormat(m_hdc, &pfd);
-		if (!pixel_format)
-		{
-			return false;
-		}
-
-		if (!SetPixelFormat(m_hdc, pixel_format, &pfd))
-		{
-			return false;
-		}
-
-		m_gl_ctx = wglCreateContext(m_hdc);
-		if (!wglMakeCurrent(m_hdc, m_gl_ctx))
-		{
-			wglDeleteContext(m_gl_ctx);
-			return false;
-		}
-
-		if (!gladLoadGL())
-		{
-			return false;
-		}
-
-		glViewport(0, 0, 1280, 720);
-		glClearColor(0.2f, 0.3f, 0.1f, 1.f);
-		return true;
-
 	}
 
 	void Platform_Win32::OnNewSize(nlohmann::json t_data)
@@ -178,6 +112,80 @@ namespace Gateway
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+		case WM_KEYDOWN:
+		case WM_SYSKEYDOWN:
+		case WM_KEYUP:
+		case WM_SYSKEYUP: {
+
+			nlohmann::json obj;
+			obj["key"] = (uint16_t)t_wparam;
+			obj["state"] = (t_msg == WM_KEYDOWN || t_msg == WM_SYSKEYDOWN);
+			
+			//@TODO: Impl modifiers
+			//obj["mod"] = getstate
+
+			m_engine->OnEvent(EventType_Input, EventInputType_Key, obj);
+		} break;
+		case WM_MOUSEMOVE: {
+			int32_t x = GET_X_LPARAM(t_lparam);
+			int32_t y = GET_Y_LPARAM(t_lparam);
+
+			nlohmann::json obj;
+			obj["type"] = EventInputType_MouseMove;
+			obj["xpos"] = x;
+			obj["ypos"] = y;
+
+			m_engine->OnEvent(EventType_Input, EventInputType_MouseMove, obj);
+		} break;
+		case WM_MOUSEWHEEL: {
+			int32_t delta = GET_WHEEL_DELTA_WPARAM(t_wparam);
+			if (delta != 0) {
+				delta = (delta < 0) ? -1 : 1;
+			}
+
+			nlohmann::json obj;
+			obj["type"] = EventInputType_MouseWheel;
+			obj["delta"] = delta;
+
+			m_engine->OnEvent(EventType_Input, EventInputType_MouseWheel, obj);
+		} break;
+		case WM_LBUTTONDOWN:
+		case WM_MBUTTONDOWN:
+		case WM_RBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_MBUTTONUP:
+		case WM_RBUTTONUP: {
+		
+			bool pressed = (t_msg == WM_LBUTTONDOWN || t_msg == WM_MBUTTONDOWN || t_msg == WM_RBUTTONDOWN);
+			MouseButtons button = MouseButton_Last;
+			
+			switch (t_msg)
+			{
+				case WM_LBUTTONDOWN:
+				case WM_LBUTTONUP:
+					button = MouseButton_Left;
+					break;
+				case WM_MBUTTONDOWN:
+				case WM_MBUTTONUP:
+					button = MouseButton_Wheel;
+					break;
+				case WM_RBUTTONDOWN:
+				case WM_RBUTTONUP:
+					button = MouseButton_Right;
+					break;
+			}
+
+			if (button == MouseButton_Last)
+				break;
+
+			nlohmann::json obj;
+			obj["type"] = EventInputType_Mouse;
+			obj["button"] = button;
+			obj["state"] = pressed;
+
+			m_engine->OnEvent(EventType_Input, EventInputType_Mouse, obj);
+
+		} break;
 		default:
 			break;
 		}

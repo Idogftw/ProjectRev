@@ -1,11 +1,11 @@
 #include "common/system/CVarSys.hpp"
+#include "common/system/LogSys.hpp"
 
 namespace Gateway
 {
 	CVarSystem::CVarSystem(Engine* t_engine)
 		: m_engine(t_engine)
 	{
-		Init();
 	}
 
 	CVarSystem::~CVarSystem()
@@ -35,13 +35,15 @@ namespace Gateway
 	void CVarSystem::RegisterAllCVars()
 	{
 		//System
-		Register("s_save_log", false, CVarFlag_Bool | CVarFlag_System | CVarFlag_Save, "Save logs in to a file.");
+		Register("s_save_log", true, CVarFlag_Bool | CVarFlag_System | CVarFlag_Save, "Save logs in to a file.");
 		Register("s_timestamps", 0, CVarFlag_Int | CVarFlag_System, "Print the timestamps along with each log, 0 = none, 1 = msec, 2 = sec.");
 		Register("s_developer", 0, CVarFlag_Bool | CVarFlag_System | CVarFlag_Save, "Enables developer mode for better debugging.");
 	
 		//Rendering
 		Register("r_width", 1280, CVarFlag_Int | CVarFlag_Render | CVarFlag_Save, "Width of window and viewport.");
 		Register("r_height", 720, CVarFlag_Int | CVarFlag_Render | CVarFlag_Save, "Height of window and viewport.");
+		Register("r_rendertype", RendererType_Deferred, CVarFlag_Int | CVarFlag_Render | CVarFlag_Save, "Which renderer to use for engine.");
+		Register("r_api", RendererAPIType_GL, CVarFlag_Render | CVarFlag_Int | CVarFlag_Save, "Type of hardware renderer used by the engine.");
 
 		//Audio
 
@@ -52,7 +54,7 @@ namespace Gateway
 	{
 		if (t_args["value"].size() < 2)
 		{
-			//LOG_INFO("set <cvar_name> <value> : set a cvar");
+			GINFO("CVarSys: set <cvar_name> <value> : set a cvar");
 			return;
 		}
 

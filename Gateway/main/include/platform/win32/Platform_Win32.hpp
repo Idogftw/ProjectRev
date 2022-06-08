@@ -2,14 +2,14 @@
 #ifdef win32
 
 #include <Windows.h>
+#include <windowsx.h>
 #include <stdint.h>
 
-#include "common/Data.hpp"
-#include "platform/Platform.hpp"
 #include <json.hpp>
 
-//@TEMP
-#include <glad/glad.h>
+#include "common/Data.hpp"
+#include "input/InputTypes.hpp"
+#include "platform/Platform.hpp"
 
 namespace Gateway
 {
@@ -26,20 +26,13 @@ namespace Gateway
 		bool Init();
 		void PumpMessages();
 		void* GetHandle() { return m_handle; }
-		
-		//@Temp
-		bool InitGL();
 	private:
 		void OnNewSize(nlohmann::json t_data);
 		static LRESULT CALLBACK Win32_Proc(HWND t_hwnd, uint32_t t_msg, WPARAM t_wparam, LPARAM t_lparam);
 	private:
+		Engine* m_engine;
 		HWND m_handle;
 		HINSTANCE m_instance;
-		Engine* m_engine;
-		
-		//@Temp
-		HGLRC m_gl_ctx;
-		HDC m_hdc;
 	};
 };
 

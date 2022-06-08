@@ -8,17 +8,22 @@
 	#include "platform/win32/Platform_Mac.hpp"
 #endif // win32
 
-#include "common/system/LogSys.hpp"
 #include "common/system/CmdSys.hpp"
 
-#include "common/system/EventSys.hpp"
 #include "event/types/EventApp.hpp"
 #include "event/types/EventInput.hpp"
+#include "event/types/EventMisc.hpp"
+
+#include "graphics/renderer/RenderTypes.hpp"
 
 namespace Gateway
 {
+	class LogSys;
 	class CVar;
 	class CVarSystem;
+	class RenderSystem;
+	class EventSystem;
+	class Input;
 
 	class Engine
 	{
@@ -42,18 +47,21 @@ namespace Gateway
 		void RegisterCVar(const std::string& t_name, T t_value, int t_flags, const std::string& t_description);
 		CVar* FindCVar(const std::string& t_name);
 		
-		void RegisterEvent(uint32_t m_event, uint32_t m_event_type, event_callback t_callback);
-		void OnEvent(uint32_t m_event, uint32_t m_event_type, nlohmann::json t_data);
+		void RegisterEvent(EventTypes m_type, uint32_t m_event, event_callback t_callback);
+		void OnEvent(EventTypes m_type, uint32_t m_event, nlohmann::json t_data);
 
 		//Since it's interfaced with functions above, might not need these getters
 		//CommandSystem* GetCmdSys() { return m_cmd_sys; }
 		//EventSystem* GetEventSys() { return m_event_sys; }
+		Platform* GetPlatform() { return m_platform; }
 	private:
 		void OnQuit_E(nlohmann::json t_data);
 	private:
 		CommandSystem* m_cmd_sys;
 		CVarSystem* m_cvar_sys;
 		EventSystem* m_event_sys;
+		RenderSystem* m_render_sys;
+		Input* m_input;
 		bool m_running;
 
 		//@TEMP

@@ -7,6 +7,8 @@
 
 namespace Gateway
 {
+	class LogSys;
+
 	typedef std::function<void(nlohmann::json)> CmdCallback;
 
 	enum CmdFlags

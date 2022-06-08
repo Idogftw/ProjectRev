@@ -26,7 +26,7 @@ namespace Gateway
 		auto ev = m_events.find(static_cast<EventAppTypes>(t_type));
 		if (ev == m_events.end())
 		{
-			//INFO("EventApp: EventType %s not registered!", static_cast<std::string>(TypeToString(t_type)));
+			GINFO("EventApp: EventType %s not registered!", TypeToString(t_type).c_str());
 			return;
 		}
 
@@ -38,7 +38,7 @@ namespace Gateway
 		auto ev = m_events.find(static_cast<EventAppTypes>(t_type));
 		if (ev == m_events.end())
 		{
-			//INFO("EventApp: EventType %s not registered!", static_cast<std::string>(TypeToString(t_type)));
+			GINFO("EventApp: EventType %s not registered!", TypeToString(t_type).c_str());
 			return;
 		}
 
@@ -58,7 +58,7 @@ namespace Gateway
 			return std::string("Update");
 		case EventAppType_Last:
 		default:
-			//WARN("EventApp: EventAppType_Last or no EventAppType given");
+			GWARN("EventApp: EventAppType_Last or no EventAppType given");
 			return std::string();
 		}
 	}

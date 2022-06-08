@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 
+#include "common/system/LogSys.hpp"
 #include "event/EventBase.hpp"
 //#include "Common/Memory/MemoryManager.hpp"
 

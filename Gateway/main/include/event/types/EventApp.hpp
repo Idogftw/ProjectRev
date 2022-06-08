@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../EventBase.hpp"
+#include "common/system/LogSys.hpp"
 
 namespace Gateway
 {
