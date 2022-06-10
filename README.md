@@ -30,23 +30,11 @@ First you're going to need a couple libraries:
         - Profile: Compatibility
 - [nlohmann](https://github.com/nlohmann/json)
 
-Once they're downloaded and installed you're going to want to place them in the /Gateway/binary directory which will need to be created.
-Layout of each: (Names are exactly how they should be so premake knows how to build the directories)
-- DevIL
-    - include
-    - lib/x64/Release
-- fbx
-    - include
-    - lib/debug | lib/release
-- glad
-    - include
-    - src
-- nlohmann
-    - include
+You can download the files from [THIS](https://mega.nz/file/Xz5BCRaD#6xANPkmEiwerqLxhj1kN-5Cd60YL34pRAAAAAAAAAAA) link and just open it and drag it in to the Gateway directory. If you prefer to download them yourselves, feel free to use links above.
 
 Lastly, you will need to download the [Premake5](https://premake.github.io/download) executable and place in the directory of the premake lua file.
 
-After everything is downloaded and put in their correct directiories you can then open a cmd prompt in the directory of the premake lua file and run 'premake.exe vs2017'
+After everything is downloaded and put in their correct directories you can then open a cmd prompt in the directory of the premake lua file and run 'premake.exe vs2017'
 
 ## Notes
 **Everything in this README and project itself is NOT set in stone so if you see something you don't like as far as a formatting, C++ standards and conventions go, not all will stay and will be subject to change based on input from others. I am simply one person and am just trying to do a fun project to share with others and am by no means a professional programmer or mathematician, there will be mistakes and possibly bad code/math but help and guidance is always welcome, thanks!**
