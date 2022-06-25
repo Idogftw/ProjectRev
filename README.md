@@ -30,7 +30,7 @@ First you're going to need a couple libraries:
         - Profile: Compatibility
 - [nlohmann](https://github.com/nlohmann/json)
 
-You can download the files from [THIS](https://mega.nz/file/Xz5BCRaD#6xANPkmEiwerqLxhj1kN-5Cd60YL34pRAAAAAAAAAAA) link and just open it and drag it in to the Gateway directory. If you prefer to download them yourselves, feel free to use links above.
+You can download the files from [THIS](https://mega.nz/file/fy5ngZBS#Aw8M040B992l0AQG2yseavBmBKxCuQ5xyQhfn6whHx0) link and just open it and drag it in to the Gateway directory. If you prefer to download them yourselves, feel free to use links above.
 
 Lastly, you will need to download the [Premake5](https://premake.github.io/download) executable and place in the directory of the premake lua file.
 
