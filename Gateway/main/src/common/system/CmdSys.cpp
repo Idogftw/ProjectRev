@@ -9,8 +9,8 @@ namespace Gateway
 
 	CommandSystem::~CommandSystem()
 	{
-		m_commands.clear();
-		m_command_buffer.clear();
+		m_commands.Clear();
+		m_command_buffer.Clear();
 	}
 
 	void CommandSystem::Init()
@@ -18,7 +18,7 @@ namespace Gateway
 		Register("exec", std::bind(&CommandSystem::Exec_CMD, this, std::placeholders::_1), CmdFlag_System, "Parses a given file which will be read in and then it will execute more commands from the file!");
 	}
 
-	void CommandSystem::Register(const std::string& t_name, CmdCallback t_callback, int t_flags, const std::string& t_description)
+	void CommandSystem::Register(const std::string& t_name, CmdCallback t_callback, int32_t t_flags, const std::string& t_description)
 	{
 		uint32_t idx = GetCommandByIdx(t_name);
 		if (idx != -1)
@@ -37,7 +37,7 @@ namespace Gateway
 		new_cmd.flags = t_flags;
 		new_cmd.description = t_description;
 
-		m_commands.push_back(new_cmd);
+		m_commands.Add(new_cmd);
 	}
 
 	void CommandSystem::Unregister(const std::string& t_name)
@@ -45,7 +45,7 @@ namespace Gateway
 		uint32_t idx = GetCommandByIdx(t_name);
 		if (idx != -1)
 		{
-			m_commands.erase(m_commands.begin() + idx);
+			m_commands.RemoveIndex(idx);
 		}
 	}
 
@@ -57,7 +57,7 @@ namespace Gateway
 			Execute(TokenizeCmd(t_str));
 			break;
 		case CmdType_Insert:
-			m_command_buffer.push_back(t_str);
+			m_command_buffer.Add(t_str);
 			break;
 		default:
 			break;
@@ -66,14 +66,14 @@ namespace Gateway
 
 	void CommandSystem::ExecuteBuffer()
 	{
-		for (uint32_t i = 0; i < m_command_buffer.size(); i++)
+		for (uint32_t i = 0; i < m_command_buffer.GetCount(); i++)
 		{
 			nlohmann::json cmd = TokenizeCmd(m_command_buffer[i]);
 
 			Execute(cmd);
 		}
 
-		m_command_buffer.clear();
+		m_command_buffer.Clear();
 	}
 
 	void CommandSystem::Execute(nlohmann::json t_args)
@@ -84,7 +84,7 @@ namespace Gateway
 			return;
 		}
 
-		for (uint32_t i = 0; i < m_commands.size(); i++)
+		for (uint32_t i = 0; i < m_commands.GetCount(); i++)
 		{
 			std::string tmp = t_args["name"];
 
@@ -131,20 +131,10 @@ namespace Gateway
 
 	int CommandSystem::GetCommandByIdx(const std::string& t_name)
 	{
-		auto it = std::find_if(m_commands.begin(), m_commands.end(), [t_name](const Command& d)
-			{
-				std::string tmp_name = t_name;
-				std::string tmp_struct_name = d.name;
-
-				std::transform(tmp_name.begin(), tmp_name.end(), tmp_name.begin(), ::tolower);
-				std::transform(tmp_struct_name.begin(), tmp_struct_name.end(), tmp_struct_name.begin(), ::tolower);
-
-				return tmp_struct_name == tmp_name;
-			});
-
-		if (it != m_commands.end())
+		for (int32_t i = 0; i < m_commands.GetCount(); i++)
 		{
-			return static_cast<int>(it - m_commands.begin());
+			if (m_commands[i].name == t_name)
+				return i;
 		}
 
 		return -1;

@@ -10,18 +10,17 @@ namespace Gateway
 
 	CVarSystem::~CVarSystem()
 	{
-		//Hack to clear the memory of the cvars
-		std::vector<CVar>().swap(m_cvars);
+		m_cvars.Clear();
 	}
 
 	void CVarSystem::Init()
 	{	
-		m_engine->RegisterCommand("set", std::bind(&CVarSystem::Set_f, this, std::placeholders::_1), CVarFlag_System, "Sets a CVar's variable.");
+		m_engine->RegisterCommand("set", std::bind(&CVarSystem::Set_CMD, this, std::placeholders::_1), CVarFlag_System, "Sets a CVar's variable.");
 	}
 
 	CVar* CVarSystem::Find(const std::string& t_name)
 	{
-		for (size_t i = 0; i < m_cvars.size(); i++)
+		for (size_t i = 0; i < m_cvars.GetCount(); i++)
 		{
 			if (m_cvars[i].GetName() == t_name)
 			{
@@ -38,7 +37,7 @@ namespace Gateway
 		Register("s_save_log", true, CVarFlag_Bool | CVarFlag_System | CVarFlag_Save, "Save logs in to a file.");
 		Register("s_timestamps", 0, CVarFlag_Int | CVarFlag_System, "Print the timestamps along with each log, 0 = none, 1 = msec, 2 = sec.");
 		Register("s_developer", 0, CVarFlag_Bool | CVarFlag_System | CVarFlag_Save, "Enables developer mode for better debugging.");
-	
+			
 		//Rendering
 		Register("r_width", 1280, CVarFlag_Int | CVarFlag_Render | CVarFlag_Save, "Width of window and viewport.");
 		Register("r_height", 720, CVarFlag_Int | CVarFlag_Render | CVarFlag_Save, "Height of window and viewport.");
@@ -50,7 +49,7 @@ namespace Gateway
 		//GUI
 	}
 
-	void CVarSystem::Set_f(nlohmann::json t_args)
+	void CVarSystem::Set_CMD(nlohmann::json t_args)
 	{
 		if (t_args["value"].size() < 2)
 		{

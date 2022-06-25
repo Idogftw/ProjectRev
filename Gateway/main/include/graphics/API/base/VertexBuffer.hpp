@@ -3,7 +3,8 @@
 #include <stdint.h>
 #include <vector>
 
-#include "graphics/API/GraphicTypes.hpp"
+#include "containers/List.hpp"
+#include "types/GraphicTypes.hpp"
 
 namespace Gateway
 {
@@ -20,7 +21,7 @@ namespace Gateway
 		uint16_t m_stride;
 	private:
 		uint32_t m_buffer_id;
-		std::vector<float> m_values;
+		List<float> m_values;
 	};
 
 	class IVertexBuffer

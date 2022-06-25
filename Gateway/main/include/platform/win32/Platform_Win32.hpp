@@ -8,8 +8,8 @@
 #include <json.hpp>
 
 #include "common/Data.hpp"
-#include "input/InputTypes.hpp"
 #include "platform/Platform.hpp"
+#include "types/InputTypes.hpp"
 
 namespace Gateway
 {
@@ -21,14 +21,22 @@ namespace Gateway
 		Platform_Win32(Engine* t_engine);
 		~Platform_Win32();
 
-		LRESULT CALLBACK Win32_Proc_Def(uint32_t t_msg, WPARAM t_wparam, LPARAM t_lparam);
-
 		bool Init();
+
+		/**
+		  * Duplicate: See corresponding PumpMessages in Platform.hpp
+		  */
 		void PumpMessages();
+
+		/**
+		  * Duplicate: See corresponding GetHandle in Platform.hpp
+		  */
 		void* GetHandle() { return m_handle; }
 	private:
-		void OnNewSize(nlohmann::json t_data);
 		static LRESULT CALLBACK Win32_Proc(HWND t_hwnd, uint32_t t_msg, WPARAM t_wparam, LPARAM t_lparam);
+		LRESULT CALLBACK Win32_Proc_Def(uint32_t t_msg, WPARAM t_wparam, LPARAM t_lparam);
+	private:
+		void NewSize_E(nlohmann::json t_data);
 	private:
 		Engine* m_engine;
 		HWND m_handle;

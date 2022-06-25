@@ -17,7 +17,7 @@ namespace Gateway
 	{
 		for (uint32_t i = 0; i < EventAppType_Last; i++)
 		{
-			m_events.insert(std::make_pair(static_cast<EventAppTypes>(i), std::vector<event_callback>()));
+			m_events.insert(std::make_pair(static_cast<EventAppTypes>(i), List<event_callback>()));
 		}
 	}
 
@@ -30,7 +30,7 @@ namespace Gateway
 			return;
 		}
 
-		ev->second.push_back(t_func);
+		ev->second.Add(t_func);
 	}
 
 	void EventApp::OnEvent(uint32_t t_type, nlohmann::json t_data)
@@ -42,7 +42,7 @@ namespace Gateway
 			return;
 		}
 
-		for (uint32_t i = 0; i < ev->second.size(); i++)
+		for (uint32_t i = 0; i < ev->second.GetCount(); i++)
 		{
 			ev->second[i](t_data);
 		}

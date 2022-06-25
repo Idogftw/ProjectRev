@@ -82,11 +82,6 @@ namespace Gateway
 		
 	}
 
-	void Platform_Win32::OnNewSize(nlohmann::json t_data)
-	{
-		
-	}
-
 	LRESULT CALLBACK Platform_Win32::Win32_Proc(HWND t_hwnd, uint32_t t_msg, WPARAM t_wparam, LPARAM t_lparam)
 	{
 		Platform_Win32* parent = reinterpret_cast<Platform_Win32*>(GetWindowLongPtrA(t_hwnd, GWLP_USERDATA));
@@ -191,5 +186,10 @@ namespace Gateway
 		}
 
 		return DefWindowProcA(m_handle, t_msg, t_wparam, t_lparam);
+	}
+
+	void Platform_Win32::NewSize_E(nlohmann::json t_data)
+	{
+
 	}
 };

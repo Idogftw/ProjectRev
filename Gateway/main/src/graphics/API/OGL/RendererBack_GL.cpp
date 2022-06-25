@@ -66,6 +66,17 @@ namespace Gateway
 		glClearColor(0.2f, 0.3f, 0.1f, 1.f);
 		return true;
 	}
+
+	void RendererBack_GL::Draw(IVertexBuffer* t_data)
+	{
+
+	}
+
+	IProgram* RendererBack_GL::CreateProgram(const std::string& t_name)
+	{
+		return nullptr;
+	}
+
 	IVertexBuffer* RendererBack_GL::CreateVertexBuffer(VertexObjectTypes t_object_type, VertexDrawTypes t_draw_type, VertexStorageTypes t_storage_type)
 	{
 		return new VertexBuffer_GL(t_object_type, t_draw_type, t_storage_type);

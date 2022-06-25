@@ -20,12 +20,12 @@ namespace Gateway
 		m_engine->RegisterEvent(EventType_Input, EventInputType_MouseMove, std::bind(&Input::OnMouse_E, this, std::placeholders::_1));
 		m_engine->RegisterEvent(EventType_Input, EventInputType_MouseWheel, std::bind(&Input::OnMouse_E, this, std::placeholders::_1));
 
-		m_engine->RegisterEvent(EventType_Application, EventAppType_Update, std::bind(&Input::Update, this, std::placeholders::_1));
+		m_engine->RegisterEvent(EventType_Application, EventAppType_Update, std::bind(&Input::Update_E, this, std::placeholders::_1));
 
 		return true;
 	}
 
-	void Input::Update(nlohmann::json t_data)
+	void Input::Update_E(nlohmann::json t_data)
 	{
 		memcpy(&m_input_states.Key_Last, &m_input_states.Key_Current, sizeof(KeyboardState));
 		memcpy(&m_input_states.Mouse_Last, &m_input_states.Mouse_Current, sizeof(MouseState));

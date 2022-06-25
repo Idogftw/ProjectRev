@@ -5,6 +5,7 @@
 
 #include "common/system/LogSys.hpp"
 #include "common/Engine.hpp"
+#include "containers/List.hpp"
 
 #define GATEWAY_LOG "Gateway.log"
 
@@ -64,7 +65,7 @@ namespace Gateway
 		std::fstream m_log_file;
 		std::string m_log_dir;
 		std::string m_log_name;
-		std::vector<std::string> m_warnings;
+		List<std::string> m_warnings;
 		bool m_init;
 	};
 };

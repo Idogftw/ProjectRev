@@ -4,16 +4,19 @@
 #ifdef win32
 #include <Windows.h>
 
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	Gateway::Engine* engine = new Gateway::Engine;
 
-	if (!engine->Init())
+	if (!engine->Init(lpCmdLine))
 	{
 		return -1;
 	}
 
 	engine->Run();
+
+	delete engine;
 
 	return 0;
 }
@@ -22,7 +25,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 int main(int argc, char* argv[])
 {
-	std::cout << "Hello, World!" << std::endl;
+	Gateway::Engine* engine = new Gateway::Engine;
+
+	if (!engine->Init(argc, argv))
+	{
+		return -1;
+	}
+
+	engine->Run();
+
+	delete engine;
+
 	return 0;
 }
 

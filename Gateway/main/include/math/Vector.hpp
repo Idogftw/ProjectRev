@@ -107,33 +107,52 @@ namespace Gateway
 		//Methods
 		//===========//
 
+		/**
+		  * Name: Length
+		  * Desc: Returns length of the vector
+		  * Return: Templated type value
+		  */
 		inline T Length() const
 		{
 			return sqrt(x * x + y * y);
 		}
 
+		/**
+		  * Name: LengthSqr
+		  * Desc: Returns length squared of the vector
+		  * Return: Templated type value
+		  */
 		inline T LengthSqr() const
 		{
 			return (x * x + y * y);
 		}
 
+		/**
+		  * Name: Normalize
+		  * Desc: Returns the normalized value of the vector
+		  * Return: Templated type value
+		  */
 		inline T Normalize()
 		{
 			T length = LengthSqr();
 
 			T invlength = 1.0f / length;
 
-			if (lenght > 1e-08)
+			if (length > 1e-08)
 			{
-				x *= InvLength;
-				y *= InvLength;
+				x *= invlength;
+				y *= invlength;
 			}
 
 			return length;
 		}
 
 	public:
-		T x, y;
+		union
+		{
+			T x, y;
+			T vec[2];
+		};
 	};
 
 	template <typename T>
@@ -271,16 +290,25 @@ namespace Gateway
 		//Methods
 		//===========//
 
+		/**
+		  * Duplicate: See corresponding Length in Vec2 Class
+		  */
 		inline T Length() const
 		{
 			return sqrt(x * x + y * y + z * z);
 		}
 
+		/**
+		  * Duplicate: See corresponding LengthSqr in Vec2 Class
+		  */
 		inline T LengthSqr() const
 		{
 			return (x * x + y * y + z * z);
 		}
 
+		/**
+		  * Duplicate: See corresponding Normalize in Vec2 Class
+		  */
 		inline T Normalize()
 		{
 			T length = LengthSqr();
@@ -298,7 +326,11 @@ namespace Gateway
 		}
 
 		public:
-			T x, y, z;
+			union
+			{
+				T x, y, z;
+				T vec[3];
+			};
 	};
 
 	template <typename T>
@@ -450,16 +482,25 @@ namespace Gateway
 		//Methods
 		//===========//
 
+		/**
+		  * Duplicate: See corresponding Length in Vec2 Class
+		  */
 		inline T Length() const
 		{
 			return sqrt(x * x + y * y + z * z + w * w);
 		}
 
+		/**
+		  * Duplicate: See corresponding LengthSqr in Vec2 Class
+		  */
 		inline T LengthSqr() const
 		{
 			return (x * x + y * y + z * z + w * w);
 		}
 
+		/**
+		  * Duplicate: See corresponding Normalize in Vec2 Class
+		  */
 		inline T Normalize()
 		{
 			T length = LengthSqr();
@@ -478,6 +519,10 @@ namespace Gateway
 		}
 
 	public:
-		T x, y, z, w;
+		union
+		{
+			T x, y, z, w;
+			T vec[4];
+		};
 	};
 };

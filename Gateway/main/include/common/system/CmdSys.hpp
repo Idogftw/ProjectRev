@@ -5,6 +5,8 @@
 
 #include <json.hpp>
 
+#include "containers/List.hpp"
+
 namespace Gateway
 {
 	class LogSys;
@@ -30,7 +32,7 @@ namespace Gateway
 	{
 		std::string name;
 		CmdCallback callback;
-		int flags;
+		int32_t flags;
 		std::string description;
 	};
 
@@ -45,25 +47,44 @@ namespace Gateway
 
 		void Init();
 
-		void Register(const std::string& t_name, CmdCallback t_callback, int t_flags, const std::string& t_description);
+		/**
+		  * Name: Register
+		  * Desc: Registers a command and its properties and adds to the array of commands
+		  * Param: Name of the command
+		  * Param: The function to call
+		  * Param: Flags for command - see CmdFlags enumeration
+		  * Param: Description of the command
+		  */
+		void Register(const std::string& t_name, CmdCallback t_callback, int32_t t_flags, const std::string& t_description);
+		
+		/**
+		  * Name: Unregister
+		  * Desc: Unregisters the command
+		  * Param: Name of the command
+		  */
 		void Unregister(const std::string& t_name);
 
 		void Buffer(CmdTypes t_type, const std::string& t_str);
 
 		void ExecuteBuffer();
 
-		void Execute(nlohmann::json t_args);
+		/**
+		  * Name: GetCommandByIdx
+		  * Desc: Gets the command by an index using the name of the command
+		  * Param: Name of the command
+		  * Return: Returns the index of the command in the array
+		  */
+		int32_t GetCommandByIdx(const std::string& t_name);
 
+		bool Empty() { return !m_command_buffer.GetCount(); }
+	private:
 		nlohmann::json TokenizeCmd(const std::string& t_str);
-
-		int GetCommandByIdx(const std::string& t_name);
-
-		bool Empty() { return !m_command_buffer.size(); }
+		void Execute(nlohmann::json t_args);
 	private:
 		void Exec_CMD(nlohmann::json t_args);
 	private:
-		std::vector<Command> m_commands;
-		std::vector<std::string> m_command_buffer;
+		List<Command> m_commands;
+		List<std::string> m_command_buffer;
 	};
 
 	

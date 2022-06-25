@@ -31,8 +31,6 @@ namespace Gateway
 
 	void IVertexBuffer::CreateBuffers(uint32_t t_flags, uint16_t t_stride)
 	{
-		uint32_t stride = (t_stride == 2) ? 2 : 3;
-
 		if (t_flags & VertexBufferType_Position)
 		{
 			m_objects.insert(std::pair<VertexBufferTypes, BufferObject*>(VertexBufferType_Position, new BufferObject(VertexBufferType_Position, t_stride)));

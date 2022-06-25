@@ -4,10 +4,9 @@
 
 #include "graphics/renderer/Renderer.hpp"
 
-#include "graphics/API/RendererBack.hpp"
 #include "graphics/API/OGL/RendererBack_GL.hpp"
 
-#include "graphics/renderer/RenderTypes.hpp"
+#include "types/RenderTypes.hpp"
 
 
 namespace Gateway

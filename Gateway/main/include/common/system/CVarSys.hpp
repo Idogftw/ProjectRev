@@ -19,6 +19,7 @@ namespace Gateway
 		CVarFlag_String,
 		//System
 		CVarFlag_System,
+		CVarFlag_FileSystem,
 		CVarFlag_Render,
 		CVarFlag_Audio,
 		CVarFlag_Game,
@@ -44,23 +45,37 @@ namespace Gateway
 
 		void Init();
 
+		/**
+		  * Name: Find
+		  * Desc: Finds a CVar based on the name provided, else returns nullptr if none found
+		  * Param: Name of the CVar
+		  * Return: A corresponding CVar
+		  */
 		CVar* Find(const std::string& t_name);
 
+		/**
+		  * Name: Register
+		  * Desc: Registers the CVar and its properties and adds to the array of CVars
+		  * Param: Name of the CVar
+		  * Param: The value of the CVar
+		  * Param: Flags for CVar - see CVarFlags enumeration
+		  * Param: Description of the CVar
+		  */
 		template<typename T>
-		void Register(const std::string& t_name, T t_value, int t_flags, const std::string& t_description);
+		void Register(const std::string& t_name, T t_value, int32_t t_flags, const std::string& t_description);
 
 		void RegisterAllCVars();
 	private:
 		template <typename T>
 		void Update(const std::string& t_name, T t_val);
-		void Set_f(nlohmann::json t_args);
+		void Set_CMD(nlohmann::json t_args);
 	private:
 		Engine* m_engine;
-		std::vector<CVar> m_cvars;
+		List<CVar> m_cvars;
 	};
 
 	template<typename T>
-	void CVarSystem::Register(const std::string& t_name, T t_value, int t_flags, const std::string& t_description)
+	void CVarSystem::Register(const std::string& t_name, T t_value, int32_t t_flags, const std::string& t_description)
 	{
 		//Check if it exists
 		CVar* var = Find(t_name);
@@ -73,7 +88,7 @@ namespace Gateway
 
 		var = new CVar{ t_name, t_value, t_flags, t_description };
 
-		m_cvars.push_back(*var);
+		m_cvars.Add(*var);
 		
 		//m_engine->RegisterEvent(EventType_Misc, EventMiscType_CVar, );
 	}
@@ -107,7 +122,7 @@ namespace Gateway
 		CVar() {}
 		
 		template<typename T>
-		CVar(const std::string& t_name, T t_value, int t_flags, const std::string& t_description);
+		CVar(const std::string& t_name, T t_value, int32_t t_flags, const std::string& t_description);
 		
 		void SetName(const std::string& t_name)
 		{
@@ -120,7 +135,7 @@ namespace Gateway
 			m_value["val"] = t_val;
 		}
 
-		void SetFlags(int t_flags)
+		void SetFlags(int32_t t_flags)
 		{
 			m_flags = t_flags;
 		}
@@ -141,7 +156,7 @@ namespace Gateway
 			return m_value["val"];
 		}
 
-		int GetFlags()
+		int32_t GetFlags()
 		{
 			return m_flags;
 		}
@@ -153,12 +168,12 @@ namespace Gateway
 	private:
 		std::string m_name;
 		nlohmann::json m_value;
-		int m_flags;
+		int32_t m_flags;
 		std::string m_description;
 	};
 
 	template<typename T>
-	inline CVar::CVar(const std::string& t_name, T t_value, int t_flags, const std::string& t_description)
+	inline CVar::CVar(const std::string& t_name, T t_value, int32_t t_flags, const std::string& t_description)
 	{
 		m_name = t_name;
 		m_value["val"] = t_value;

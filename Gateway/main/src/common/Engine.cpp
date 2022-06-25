@@ -1,5 +1,6 @@
 #include "common/Engine.hpp"
 
+#include "common/file/FileBinary.hpp"
 #include "common/system/CVarSys.hpp"
 #include "common/system/EventSys.hpp"
 #include "common/system/LogSys.hpp"
@@ -17,22 +18,23 @@ namespace Gateway
 
 	Engine::~Engine()
 	{
-		delete m_cmd_sys;
 		delete m_cvar_sys;
+		delete m_cmd_sys;
 		delete m_event_sys;
-		delete m_render_sys;
+		delete m_file_sys;
 		delete m_platform;
+		delete m_render_sys;
 		delete m_input;
 	}
 
-	bool Engine::Init()
+	bool Engine::Init(const std::string& t_cmd_line)
 	{
-		if (!InitModules())
+		if (!InitModules(t_cmd_line))
 		{
 			//ERROR("Engine: Couldn't initialize modules!");
 			return false;
 		}
-		
+
 		RegisterEvent(EventType_Application, EventAppType_Quit, std::bind(&Engine::OnQuit_E, this, std::placeholders::_1));
 		//RegisterEvent(EventType_Input, EventInType_Quit, std::bind(&Engine::onquit));
 
@@ -49,10 +51,30 @@ namespace Gateway
 			{
 				m_cmd_sys->ExecuteBuffer();
 			}
-		
+
 			if (m_input->InputUp(Key_F) && m_input->InputWasDown(Key_F))
 			{
-				GINFO("F Loser");
+				FileBinary* file = new FileBinary;
+				file->SetFileMode(FileMode_Write);
+				file->Create("asdff");
+				int asd = 5;
+				file->Write(&asd, sizeof(asd));
+				std::string l = "Hi!!!";
+				file->WriteString(l);
+				delete file;
+			}
+
+			if (m_input->InputUp(Key_A) && m_input->InputWasDown(Key_A))
+			{
+				FileBinary* file = new FileBinary;
+				file->SetFileMode(FileMode_Read);
+				file->Create("asdff");
+				int asd;
+				file->Read(&asd, sizeof(asd));
+				std::string l;
+				file->ReadString(l);
+				GINFO("int: %d | str: %s", asd, l.c_str());
+				delete file;
 			}
 
 			//@TODO: Impl delta time
@@ -69,6 +91,14 @@ namespace Gateway
 		LogSys::Get()->Shutdown();
 	}
 
+	void Engine::ParseCommandLine(const std::string& t_cmd_line)
+	{
+		//@TODO: Tokenize strings in to a data array or struct!
+		//Tokenize(t_cmd_line);
+
+		//GINFO("%s", t_cmd_line.c_str());
+	}
+
 	void Engine::CreateModules()
 	{
 		m_cvar_sys = new CVarSystem(this);
@@ -76,34 +106,36 @@ namespace Gateway
 
 		m_event_sys = new EventSystem;
 
+		m_file_sys = new FileSystem(this);
+
+		CreatePlatform();
+
 		//@TODO: Temp
 		m_render_sys = new RenderSystem(this);
-
-		//@TODO: Impl platform switching here
-#if win32
-		m_platform = new Platform_Win32(this);
-#elif linux
-		m_platform = new Platform_Linux(this);
-#endif
 
 		m_input = new Input(this);
 	}
 
-	bool Engine::InitModules()
+	bool Engine::InitModules(const std::string& t_cmd_line)
 	{
 		//@TODO: Impl Memory Manager
-		//@TODO: Impl File System
-
 		LogSys::Get()->Init(m_cvar_sys);
 
 		m_event_sys->RegisterSystem(EventType_Application, new EventApp);
 		m_event_sys->RegisterSystem(EventType_Input, new EventInput);
 		m_event_sys->RegisterSystem(EventType_Misc, new EventMisc);
-		
+
 		m_cmd_sys->Init();
 
 		m_cvar_sys->Init();
 		m_cvar_sys->RegisterAllCVars();
+
+		ParseCommandLine(t_cmd_line);
+
+		if (!m_file_sys->Init())
+		{
+			return false;
+		}
 
 		if (!m_platform->Init())
 		{
@@ -123,7 +155,16 @@ namespace Gateway
 		return true;
 	}
 
-	void Engine::RegisterCommand(const std::string& t_name, CmdCallback t_callback, int t_flags, const std::string& t_description)
+	void Engine::CreatePlatform()
+	{
+#if win32
+		m_platform = new Platform_Win32(this);
+#elif linux
+		m_platform = new Platform_Linux(this);
+#endif
+	}
+
+	void Engine::RegisterCommand(const std::string& t_name, CmdCallback t_callback, int32_t t_flags, const std::string& t_description)
 	{
 		m_cmd_sys->Register(t_name, t_callback, t_flags, t_description);
 	}

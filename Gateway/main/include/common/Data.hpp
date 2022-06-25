@@ -5,3 +5,5 @@
 #define ENGINE_VERSION		"Gateway v0.0.1"
 
 #define WIN32_CLASS_NAME	"GatewayClass"
+
+#define BASE_DIR			"data"

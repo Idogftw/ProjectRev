@@ -105,11 +105,20 @@ namespace Gateway
 		//Vec 3 Types
 		//===========//
 
+		/**
+		  * Name: GetRight
+		  * Desc: Retrieves the right vector from the matrix
+		  * Return: Vec3 of the right vector
+		  */
 		inline Vec3<T> GetRight() const
 		{
 			return Vec3<T>(mv[0][0], mv[0][1], mv[0][2])
 		}
 
+		/**
+		  * Name: SetRight
+		  * Desc: Sets the right vector in the matrix
+		  */
 		inline void SetRight(const Vec3<T>& t_vec)
 		{
 			mv[0][0] = t_vec.x;
@@ -117,11 +126,20 @@ namespace Gateway
 			mv[0][2] = t_vec.z;
 		}
 
+		/**
+		  * Name: GetUp
+		  * Desc: Retrieves the up vector from the matrix
+		  * Return: Vec3 of the up vector
+		  */
 		inline Vec3<T> GetUp() const
 		{
 			return Vec3<T>(mv[1][0], mv[1][1], mv[1][2])
 		}
 
+		/**
+		  * Name: SetUp
+		  * Desc: Sets the up vector in the matrix
+		  */
 		inline void SetUp(const Vec3<T>& t_vec)
 		{
 			mv[1][0] = t_vec.x;
@@ -129,11 +147,20 @@ namespace Gateway
 			mv[1][2] = t_vec.z;
 		}
 
+		/**
+		  * Name: GetForward
+		  * Desc: Retrieves the forward vector from the matrix
+		  * Return: Vec3 of the forward vector
+		  */
 		inline Vec3<T> GetForward() const
 		{
 			return Vec3<T>(mv[2][0], mv[2][1], mv[2][2])
 		}
 
+		/**
+		  * Name: SetForward
+		  * Desc: Sets the forward vector in the matrix
+		  */
 		inline void SetForward(const Vec3<T>& t_vec)
 		{
 			mv[2][0] = t_vec.x;
@@ -141,11 +168,20 @@ namespace Gateway
 			mv[2][2] = t_vec.z;
 		}
 
+		/**
+		  * Name: GetTranslation
+		  * Desc: Retrieves the translation vector from the matrix
+		  * Return: Vec3 of the translation vector
+		  */
 		inline Vec3<T> GetTranslation() const
 		{
 			return Vec3<T>(mv[0][3], mv[1][3], mv[2][3])
 		}
 
+		/**
+		  * Name: SetTranslation
+		  * Desc: Sets the translation vector in the matrix
+		  */
 		inline void SetTranslation(const Vec3<T>& t_vec)
 		{
 			mv[0][3] = t_vec.x;
@@ -154,6 +190,10 @@ namespace Gateway
 		}
 
 	public:
-		T mv[4][4];
+		union
+		{
+			T mv[4][4];
+			T v[16];
+		};
 	};
 };

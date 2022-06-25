@@ -52,6 +52,8 @@ workspace "ProjectRev-SLN"
         kind "StaticLib"
         language "C++"
 
+        debugdir (path.join(GAME_OUTPUT, "dev/Debug"))
+
         -- Multi Use libs --
         
         libdirs {
