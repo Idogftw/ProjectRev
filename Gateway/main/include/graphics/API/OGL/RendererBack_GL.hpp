@@ -16,8 +16,12 @@ namespace Gateway
 	public:
 		RendererBack_GL(Engine* t_engine);
 		~RendererBack_GL();
-
+		
 		bool Init();
+
+		void Draw(IVertexBuffer* t_data);
+
+		IProgram* CreateProgram(const std::string& t_name);
 
 		IVertexBuffer* CreateVertexBuffer(VertexObjectTypes t_object_type, VertexDrawTypes t_draw_type, VertexStorageTypes t_storage_type);
 		//@TEMP
